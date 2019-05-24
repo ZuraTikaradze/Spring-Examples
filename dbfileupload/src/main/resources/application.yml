@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: fileupload
+  jmx:
+    default-domain: fileupload
+  datasource:
+    url: jdbc:oracle:thin:@11.111.111.11:1111:ZDB
+    username: ZURA
+    password: zura
+    driver-class-oracle: jdbc.driver.OracleDriver
+  jpa:
+    hibernate:
+      show-sql: true
+      ddl-auto: create-drop
