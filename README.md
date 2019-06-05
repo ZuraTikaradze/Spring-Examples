@@ -14,3 +14,5 @@ FileUpload :  https://www.callicoder.com/spring-boot-file-upload-download-rest-a
 dbfileupload : https://www.callicoder.com/spring-boot-file-upload-download-jpa-hibernate-mysql-database-example/
 
 security: https://medium.com/omarelgabrys-blog/microservices-with-spring-boot-authentication-with-jwt-part-3-fafc9d7187e8
+
+SecurityWithDB: ____
