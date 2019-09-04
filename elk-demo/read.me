@@ -1,0 +1,64 @@
+Spring Boot Microservices + ELK(Elasticsearch, Logstash, and Kibana) Stack Hello World Example
+https://www.javainuse.com/spring/springboot-microservice-elk
+
+
+What is ELK? Need for it?
+The ELK Stack consists of three open-source products - Elasticsearch, Logstash, and Kibana from Elastic.
+Elasticsearch is a NoSQL database that is based on the Lucene search engine.
+Logstash is a log pipeline tool that accepts inputs from various sources, executes different transformations, and exports the data to various targets. It is a dynamic data collection pipeline with an extensible plugin ecosystem and strong Elasticsearch synergy
+Kibana is a visualization UI layer that works on top of Elasticsearch.
+These three projects are used together for log analysis in various environments. So Logstash collects and parses logs, Elastic search indexes and store this information while Kibana provides a UI layer that provide actionable insights.
+Use Cases-
+Consider you have a single application running and it produces logs. Now suppose you want analyze the logs generated. One option is to manually analyze them. But suppose these logs are large, then manually analyzing them is not feasible.
+Suppose we have multiple Application running and all these applications produce logs. If we have to analyze the logs manually we will need to go through all the log files. These may run into hundreds.
+We can use ELK here to analyze the logs more efficiently and also using more complex search criterias. It provides log aggregation and efficient searching.
+
+Lets Begin
+We will first download the required stack.
+1. Elasticsearch - Download the latest version of elasticsearch from Elasticsearch downloads
+1.1 Run the elasticsearch.bat using the command prompt. Elasticsearch can then be accessed at localhost:9200
+2. Kibana - Download the latest version of kibana from Kibana downloads
+2.1 Modify the kibana.yml to point to the elasticsearch instance. In our case this will be 9200. So uncomment the following line in kibana.yml- elasticsearch.url: "http://localhost:9200"
+2.3 Run the kibana.bat using the command prompt. kibana UI can then be accessed at localhost:5601
+3. Logstash - Download the latest version of logstash from Logstash downloads
+3.1 Create a configuration file named logstash.conf. In further section we will be making the changes for this file and starting logstash
+3.2 logstash :
+input {
+  file {
+    type => "java"
+    path => "C:/elk/spring-boot-elk.log"
+    codec => multiline {
+      pattern => "^%{YEAR}-%{MONTHNUM}-%{MONTHDAY} %{TIME}.*"
+      negate => "true"
+      what => "previous"
+    }
+  }
+}
+
+filter {
+  #If log line contains tab character followed by 'at' then we will tag that entry as stacktrace
+  if [message] =~ "\tat" {
+    grok {
+      match => ["message", "^(\tat)"]
+      add_tag => ["stacktrace"]
+    }
+  }
+
+}
+
+output {
+
+  stdout {
+    codec => rubydebug
+  }
+
+  # Sending properly parsed log events to elasticsearch
+  elasticsearch {
+    hosts => ["localhost:9200"]
+  }
+}
+
+
+3.3 logstash -f logstash.conf
+
+4. go to kibana UI console- localhost and create an index pattern logstash-* to see the indexed data-
