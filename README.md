@@ -19,6 +19,5 @@ SecurityWithDB: ____
 
 AOP - https://www.journaldev.com/2583/spring-aop-example-tutorial-aspect-advice-pointcut-joinpoint-annotations
 
-
 AOP Profiling - https://www.journaldev.com/7801/spring-aop-method-profiling
 ---
