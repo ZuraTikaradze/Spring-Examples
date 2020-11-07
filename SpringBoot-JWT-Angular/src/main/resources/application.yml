@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: my-security
+  jmx:
+    default-domain: my-security
+  datasource:
+    url: TEMPTEMPTEMPTEMPTEMP
+    username: ZURA
+    password: 1
+    driver-class-oracle: jdbc.driver.OracleDriver
+  jpa:
+    hibernate:
+      show-sql: true
+      ddl-auto: update #create-drop
+server:
+  port: 8080
